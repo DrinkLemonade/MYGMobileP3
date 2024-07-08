@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public GameSession currentSession;
     public GameState State;
 
+    [SerializeField]
+    public int LivesInASession = 4;
     private void Awake()
     {
         i = this;

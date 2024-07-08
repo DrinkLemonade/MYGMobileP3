@@ -6,8 +6,11 @@ using System.Linq;
 public class GameSession
 {
     Time timeElapsed;
-    int maxLives, livesLeft;
+    public int livesLeft;
     HashSet<Category> categoriesFound;
+    //TODO: Is this stupid or will this let me avoid duplicate guesses? I dunno if adding identical classes/structs to a HashSet counts as unique.
+    //It's kinda stupid in that it hardcodes the amount of words per guess/category. But that's premature optimization, isn't it?
+    HashSet<HashSet<string>> guesses; 
     const int wordsPerCategory = 4;
 
     public enum CategoryType
@@ -30,8 +33,11 @@ public class GameSession
     Dictionary<string, Category> Words;
     public GameSession()
     {
+        livesLeft = GameManager.i.LivesInASession;
+
         Words = new();
         categoriesFound = new();
+        guesses = new();
         AddWords(CategoryType.Green, "Villes", "Paris", "Londres", "Helsinki", "Pékin");
         AddWords(CategoryType.Yellow, "Phases de la lune", "Croissante", "Nouvelle", "Pleine", "Décroissante");
         AddWords(CategoryType.Blue, "Patisseries", "Religieuse", "Eclair", "Tulipe", "Choux");
@@ -57,6 +63,27 @@ public class GameSession
 
     public void EvaluateGuess()
     {
+        var guess = new HashSet<string>
+        {
+        UIManager.i.WordButtonsSelected[0].associatedWord,
+        UIManager.i.WordButtonsSelected[1].associatedWord,
+        UIManager.i.WordButtonsSelected[2].associatedWord,
+        UIManager.i.WordButtonsSelected[3].associatedWord
+        };
+
+        foreach (var g in guesses)
+        {
+            if (g.SetEquals(guess))
+            {
+                //We already made a guess like this
+                UIManager.i.infoBanner.Show();
+                return;
+            }
+        }
+        //We haven't made a guess like this yet
+        guesses.Add(guess);
+
+
         //could probably do something clean with LINQ
         int i = 0;
         List<Category> cats = new(); //hehehe
@@ -81,6 +108,8 @@ public class GameSession
     void GuessIsIncorrect()
     {
         Debug.Log("Failure");
+        DecreaseLives();
+        if (livesLeft == 0) Defeat();
     }
 
     void GuessIsCorrect(Category categoryFound)
@@ -110,7 +139,26 @@ public class GameSession
         Debug.Log($"Success! Categories found: {categoriesFound.Count}");
 
         UIManager.i.WordButtonsSelected.Clear();
-
         UIManager.i.EnableButtons();
+    }
+
+    void DecreaseLives()
+    {
+        livesLeft--;
+        //Should probably be its own function, UpdateLifeCount?
+        UIManager.i.livesTracker.UpdateText(livesLeft);
+    }
+
+    void Victory()
+    {
+
+    }
+    void Defeat()
+    {
+
+    }
+    void GameIsOver()
+    {
+
     }
 }

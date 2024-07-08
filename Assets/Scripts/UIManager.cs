@@ -17,6 +17,10 @@ public class UIManager : MonoBehaviour
     List<GameObject> CategoryPanels;
     [SerializeField]
     Color CategoryGreenColor, CategoryYellowColor, CategoryBlueColor, CategoryPurpleColor;
+    [SerializeField]
+    public LivesTracker livesTracker;
+    [SerializeField]
+    public InfoBanner infoBanner;
 
     private void Awake()
     {
@@ -32,6 +36,9 @@ public class UIManager : MonoBehaviour
         {
             item.toggle.SetIsOnWithoutNotify(false);
         }
+
+        livesTracker.UpdateText(GameManager.i.currentSession.livesLeft);
+        infoBanner.HideInstantly();
     }
 
     public void SelectWord(WordToggle btn)
