@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static GameSession;
 
 public class UIManager : MonoBehaviour
 {
@@ -11,6 +13,10 @@ public class UIManager : MonoBehaviour
     List<WordToggle> WordButtons;
     [SerializeField]
     Button confirmButton;
+    [SerializeField]
+    List<GameObject> CategoryPanels;
+    [SerializeField]
+    Color CategoryGreenColor, CategoryYellowColor, CategoryBlueColor, CategoryPurpleColor;
 
     private void Awake()
     {
@@ -57,15 +63,46 @@ public class UIManager : MonoBehaviour
     {
         foreach (var item in WordButtons)
         {
+            //Disable all buttons that aren't currently in the selected buttons list.
             if (!WordButtonsSelected.Contains(item)) item.toggle.interactable = false;
         }
     }
 
-    void EnableButtons()
+    public void EnableButtons()
     {
         foreach (var item in WordButtons)
         {
-            item.toggle.interactable = true;
+            //Don't re-enable buttons that have been found.
+            if (!item.Found) item.toggle.interactable = true;
         }
+    }
+
+    public void EnablePanel(int atSiblingIndex, string catName, GameSession.CategoryType type)
+    {
+        //Change this to a less stupid version
+        Color col;
+        switch (type)
+        {
+            case CategoryType.Green:
+                col = CategoryGreenColor;
+                break;
+            case CategoryType.Yellow:
+                col = CategoryYellowColor;
+                break;
+            case CategoryType.Blue:
+                col = CategoryBlueColor;
+                break;
+            case CategoryType.Purple:
+                col = CategoryPurpleColor;
+                break;
+            default:
+                col = Color.red;
+                Debug.LogError("Unassigned category?");
+                break;
+        }
+
+        CategoryPanels[atSiblingIndex].SetActive(true);
+        CategoryPanels[atSiblingIndex].GetComponentInChildren<TextMeshProUGUI>().text = catName;
+        CategoryPanels[atSiblingIndex].GetComponent<Image>().color = col;
     }
 }

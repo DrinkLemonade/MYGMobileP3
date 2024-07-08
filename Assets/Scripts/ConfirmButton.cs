@@ -7,6 +7,6 @@ public class ConfirmButton : MonoBehaviour
     // Start is called before the first frame update
     public void Confirm()
     {
-        GameManager.i.currentSession.MakeGuess();
+        GameManager.i.currentSession.EvaluateGuess();
     }
 }
