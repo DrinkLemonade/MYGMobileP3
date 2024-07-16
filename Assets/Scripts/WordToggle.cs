@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,6 +30,7 @@ public class WordToggle : MonoBehaviour
     {
         Found = true;
         toggle.interactable = false;
-        toggle.enabled = false;
+        toggle.isOn = false;
+        UIManager.i.DeselectWord(this);
     }
 }

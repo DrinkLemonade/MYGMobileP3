@@ -1,10 +1,12 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
+
 using static GameSession;
+using Unity.Collections.LowLevel.Unsafe;
 
 public class UIManager : MonoBehaviour
 {
@@ -20,7 +22,14 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     public LivesTracker livesTracker;
     [SerializeField]
-    public InfoBanner infoBanner;
+    public InfoBanner infoBannerAlreadyGuessed, infoBannerOneAway;
+    [SerializeField]
+    GameEndPanel gameEndPanel;
+
+    [SerializeField]
+    GameObject wordDummy;
+    [SerializeField]
+    public GameObject ButtonHolder;
 
     private void Awake()
     {
@@ -38,7 +47,8 @@ public class UIManager : MonoBehaviour
         }
 
         livesTracker.UpdateText(GameManager.i.currentSession.livesLeft);
-        infoBanner.HideInstantly();
+        infoBannerAlreadyGuessed.HideInstantly();
+        infoBannerOneAway.HideInstantly();
     }
 
     public void SelectWord(WordToggle btn)
@@ -111,5 +121,33 @@ public class UIManager : MonoBehaviour
         CategoryPanels[atSiblingIndex].SetActive(true);
         CategoryPanels[atSiblingIndex].GetComponentInChildren<TextMeshProUGUI>().text = catName;
         CategoryPanels[atSiblingIndex].GetComponent<Image>().color = col;
+    }
+
+    public void ShakeSelectedButtons()
+    {
+        foreach (var item in WordButtonsSelected)
+        {
+            item.gameObject.transform.DOPunchPosition(new Vector3(10f, 0f, 0f), duration: 1f);
+        }
+    }
+
+    public void SwapAnimation(WordToggle first, WordToggle second)
+    {
+        //Instantiate(wordDummy);
+        //wordDummy.transform.position = first.transform.position;
+        //Instantiate(wordDummy);
+        //wordDummy.transform.position = second.transform.position;
+        first.gameObject.transform.DOMove(second.gameObject.transform.position, duration: 1f).SetEase(Ease.OutCubic);
+        second.gameObject.transform.DOMove(first.gameObject.transform.position, duration: 1f).SetEase(Ease.OutCubic);
+
+    }
+
+    public void Victory(float secs, int mistakes)
+    {
+        gameEndPanel.ShowSuccess(secs, mistakes);
+    }
+    public void Defeat()
+    {
+        gameEndPanel.ShowFailure();
     }
 }

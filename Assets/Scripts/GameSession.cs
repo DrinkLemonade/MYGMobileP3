@@ -1,11 +1,12 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using DG.Tweening;
 
 public class GameSession
 {
-    Time timeElapsed;
+    //TODO: Currently receives time from GameManager
+    public float secondsElapsed;
     public int livesLeft;
     HashSet<Category> categoriesFound;
     //TODO: Is this stupid or will this let me avoid duplicate guesses? I dunno if adding identical classes/structs to a HashSet counts as unique.
@@ -38,7 +39,7 @@ public class GameSession
         Words = new();
         categoriesFound = new();
         guesses = new();
-        AddWords(CategoryType.Green, "Villes", "Paris", "Londres", "Helsinki", "Pékin");
+        AddWords(CategoryType.Green, "Capitales", "Paris", "Londres", "Helsinki", "Pékin");
         AddWords(CategoryType.Yellow, "Phases de la lune", "Croissante", "Nouvelle", "Pleine", "Décroissante");
         AddWords(CategoryType.Blue, "Patisseries", "Religieuse", "Eclair", "Tulipe", "Choux");
         AddWords(CategoryType.Purple, "Légumes-racines", "Navet", "Raifort", "Topinambour", "Ginseng");
@@ -76,7 +77,7 @@ public class GameSession
             if (g.SetEquals(guess))
             {
                 //We already made a guess like this
-                UIManager.i.infoBanner.Show();
+                UIManager.i.infoBannerAlreadyGuessed.Show();
                 return;
             }
         }
@@ -96,31 +97,52 @@ public class GameSession
         Debug.Log($"evaluating: {cats}");
 
         //We now have a list of four categories. If they all match, the player has correctly selected 4 words of the same category.
-        //Does anything not match?
-        if (cats.Any(o => o.myType != cats[0].myType))
+        //TODO: Do this with a less stupid linq query
+        //First, find the most commonly repeated category
+        var maxRepeatedCat = cats.GroupBy(x => x)
+                          .OrderByDescending(x => x.Count())
+                          .First().Key;
+        //Next, how often does it repeat exactly?
+        int matches = cats.Where(x => x.Equals(maxRepeatedCat)).Count();
+        
+        switch (matches)
         {
-            GuessIsIncorrect();
-
+            case 4:
+                GuessIsCorrect(maxRepeatedCat);
+                break;
+            case 3:
+                Debug.LogWarning("One away...");
+                UIManager.i.infoBannerOneAway.Show();
+                GuessIsIncorrect();
+                break;
+            default:
+                GuessIsIncorrect();
+                break;
         }
-        else GuessIsCorrect(cats.First());
     }
 
     void GuessIsIncorrect()
     {
         Debug.Log("Failure");
+        UIManager.i.ShakeSelectedButtons();
         DecreaseLives();
         if (livesLeft == 0) Defeat();
+
+        //TEST
+        //UIManager.i.SwapAnimationTest();
     }
 
     void GuessIsCorrect(Category categoryFound)
     {
-        int i = 0;
-        foreach (var item in UIManager.i.WordButtonsSelected)
+        int k = 0;
+
+        var moveThese = new List<WordToggle>(UIManager.i.WordButtonsSelected);
+        foreach (var item in moveThese)
         {
             //TODO nice fancy DoTween animation
-            item.transform.SetSiblingIndex((categoriesFound.Count * wordsPerCategory) + i);
+            item.transform.SetSiblingIndex((categoriesFound.Count * wordsPerCategory) + k);
             item.SetFound();
-            i++;
+            k++;
         }
 
         //TODO: Do this in a less stupid way
@@ -130,6 +152,7 @@ public class GameSession
             words += item.associatedWord + ", ";
         }
         //Remove the last ", "
+        if (words.Length > 2)
         words = words.Remove(words.Length - 2);
 
         Debug.Log($"enabling: {words}");
@@ -139,7 +162,9 @@ public class GameSession
         Debug.Log($"Success! Categories found: {categoriesFound.Count}");
 
         UIManager.i.WordButtonsSelected.Clear();
-        UIManager.i.EnableButtons();
+
+        if (categoriesFound.Count == 4) Victory(secondsElapsed, GameManager.i.LivesInASession - livesLeft);
+        else UIManager.i.EnableButtons();
     }
 
     void DecreaseLives()
@@ -147,18 +172,15 @@ public class GameSession
         livesLeft--;
         //Should probably be its own function, UpdateLifeCount?
         UIManager.i.livesTracker.UpdateText(livesLeft);
+        if (livesLeft == 0) Defeat();
     }
 
-    void Victory()
+    void Victory(float time, int mistakes)
     {
-
+        UIManager.i.Victory(time, mistakes);
     }
     void Defeat()
     {
-
-    }
-    void GameIsOver()
-    {
-
+        UIManager.i.Defeat();
     }
 }

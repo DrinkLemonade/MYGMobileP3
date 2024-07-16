@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -16,6 +14,11 @@ public class GameManager : MonoBehaviour
     {
         i = this;
         ChangeState(GameState.Start);
+    }
+
+    private void Update()
+    {
+        currentSession.secondsElapsed += Time.deltaTime;
     }
     public enum GameState
     {
