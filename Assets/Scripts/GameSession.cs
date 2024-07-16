@@ -134,6 +134,16 @@ public class GameSession
 
     void GuessIsCorrect(Category categoryFound)
     {
+        //TODO: Do this in a less stupid way
+        string words = "";
+        int i = 0;
+        foreach (var item in UIManager.i.WordButtonsSelected)
+        {
+            words += item.associatedWord;
+            if (i < 3) words += ", ";
+            i++;
+        }
+
         int k = 0;
 
         var moveThese = new List<WordToggle>(UIManager.i.WordButtonsSelected);
@@ -144,16 +154,6 @@ public class GameSession
             item.SetFound();
             k++;
         }
-
-        //TODO: Do this in a less stupid way
-        string words = "";
-        foreach (var item in UIManager.i.WordButtonsSelected)
-        {
-            words += item.associatedWord + ", ";
-        }
-        //Remove the last ", "
-        if (words.Length > 2)
-        words = words.Remove(words.Length - 2);
 
         Debug.Log($"enabling: {words}");
         UIManager.i.EnablePanel(categoriesFound.Count, $"{categoryFound.name} - {words}", categoryFound.myType);
