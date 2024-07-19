@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameEndPanel : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class GameEndPanel : MonoBehaviour
     string victoryText, defeatText;
     [SerializeField]
     TextMeshProUGUI gameEndTMP;
+    [SerializeField]
+    string mainMenuScene;
 
     public void ShowFailure()
     {
@@ -36,6 +39,11 @@ public class GameEndPanel : MonoBehaviour
         else time = $"{h}:{m}:{s}";
 
         gameEndTMP.text = victoryText + $"\nTrouvé en : {time} - {mistakes} erreurs";
+    }
+
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene(mainMenuScene);
     }
 
     // Update is called once per frame
