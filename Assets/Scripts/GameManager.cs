@@ -12,7 +12,11 @@ public class GameManager : MonoBehaviour
     public int LivesInASession = 4;
     private void Awake()
     {
+        if (i != null)
+            Destroy(i.gameObject);
+
         i = this;
+        DontDestroyOnLoad(this);
         ChangeState(GameState.Start);
     }
 
@@ -40,18 +44,6 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.Start:
                 currentSession = new();
-
-                //TODO do this in a smarter way
-                List<WordToggle> buttons = new();
-                buttons = FindObjectsOfType<WordToggle>().ToList();
-                List<string> words = currentSession.GetWords();
-
-                int i = 0;
-                foreach (var b in buttons)
-                {
-                    b.SetWord(words[i]);
-                    i++;
-                }
                 break;
             case GameState.Ongoing:
                 break;

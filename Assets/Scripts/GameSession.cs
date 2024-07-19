@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using DG.Tweening;
 
 public class GameSession
 {
@@ -19,7 +18,7 @@ public class GameSession
         Green, Yellow, Blue, Purple
     }
 
-    struct Category
+    public struct Category
     {
         public CategoryType myType;
         public string name;
@@ -31,7 +30,7 @@ public class GameSession
         }
     }
 
-    Dictionary<string, Category> Words;
+    public Dictionary<string, Category> Words;
     public GameSession()
     {
         livesLeft = GameManager.i.LivesInASession;
@@ -108,7 +107,10 @@ public class GameSession
         switch (matches)
         {
             case 4:
-                GuessIsCorrect(maxRepeatedCat);
+                //cor probably shouldn't be local like that
+                //var cor =
+                    GuessIsCorrect(maxRepeatedCat);
+                //GameManager.i.StartCoroutine(cor);
                 break;
             case 3:
                 Debug.LogWarning("One away...");
@@ -134,7 +136,6 @@ public class GameSession
 
     void GuessIsCorrect(Category categoryFound)
     {
-        //TODO: Do this in a less stupid way
         string words = "";
         int i = 0;
         foreach (var item in UIManager.i.WordButtonsSelected)
@@ -143,21 +144,17 @@ public class GameSession
             if (i < 3) words += ", ";
             i++;
         }
-
-        int k = 0;
-
-        var moveThese = new List<WordToggle>(UIManager.i.WordButtonsSelected);
-        foreach (var item in moveThese)
-        {
-            //TODO nice fancy DoTween animation
-            item.transform.SetSiblingIndex((categoriesFound.Count * wordsPerCategory) + k);
+        //Shift the index of words in the child list, which instantly rearranges them on the GridLayout.
+        var indexShiftThese = new List<WordToggle>(UIManager.i.WordButtonsSelected);
+        int j = 0;
+        foreach (var item in indexShiftThese)
+        {            
+            item.anchor.transform.SetSiblingIndex((categoriesFound.Count * wordsPerCategory) + j);
             item.SetFound();
-            k++;
+            j++;
         }
 
-        Debug.Log($"enabling: {words}");
-        UIManager.i.EnablePanel(categoriesFound.Count, $"{categoryFound.name} - {words}", categoryFound.myType);
-
+        UIManager.i.GridAnimation(categoriesFound.Count, categoryFound.name, categoryFound.myType, words);
         categoriesFound.Add(categoryFound);
         Debug.Log($"Success! Categories found: {categoriesFound.Count}");
 

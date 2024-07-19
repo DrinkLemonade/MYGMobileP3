@@ -7,12 +7,18 @@ using DG.Tweening;
 
 using static GameSession;
 using Unity.Collections.LowLevel.Unsafe;
+using System;
+using System.Collections;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager i;
+    //[NonSerialized]
     public List<WordToggle> WordButtonsSelected;
-    List<WordToggle> WordButtons;
+    //[NonSerialized]
+    public List<WordToggle> WordButtons;
+    //[NonSerialized]
+    public List<WordToggleAnchor> ButtonAnchors;
     [SerializeField]
     Button confirmButton;
     [SerializeField]
@@ -27,28 +33,63 @@ public class UIManager : MonoBehaviour
     GameEndPanel gameEndPanel;
 
     [SerializeField]
-    GameObject wordDummy;
-    [SerializeField]
-    public GameObject ButtonHolder;
+    public GameObject ButtonAnchorHolder, ButtonFreeHolder;
+    public float wordSortIntoCategoryAnimationDuration = 1f;
 
     private void Awake()
     {
         i = this;
+        Init();
+    }
+
+    //Called by GameManager
+    public void Init()
+    {
         WordButtonsSelected = new();
         WordButtons = new();
-        WordButtons = FindObjectsOfType<WordToggle>().ToList();
+        WordButtons = ButtonFreeHolder.GetComponentsInChildren<WordToggle>().ToList();
+        ButtonAnchors = ButtonAnchorHolder.GetComponentsInChildren<WordToggleAnchor>().ToList();
+
         confirmButton.interactable = false;
 
         //Should take care of the problem where one value was mysteriously on at the start
         //TODO: Find why?
+
+        var wordsStringOnly = GameManager.i.currentSession.Words.Keys.ToList();
+        wordsStringOnly.Shuffle();
+        int i = 0;
         foreach (var item in WordButtons)
         {
             item.toggle.SetIsOnWithoutNotify(false);
+            item.SetWord(wordsStringOnly[i], Color.white);
+            item.anchor = UIManager.i.ButtonAnchors[i].gameObject;
+            item.anchor.name = $"{item.gameObject.name} Anchor";
+            i++;
         }
 
         livesTracker.UpdateText(GameManager.i.currentSession.livesLeft);
         infoBannerAlreadyGuessed.HideInstantly();
         infoBannerOneAway.HideInstantly();
+    }
+
+    public void GridAnimation(int totalCatFound, string catName, CategoryType catType, string words)
+    {
+        foreach (var item in UIManager.i.WordButtons)
+        {
+            item.MoveToAnchor();
+        }
+        var coroutine = EnablePanelDelayed(totalCatFound, catName, catType, words);
+        StartCoroutine(coroutine);
+        Debug.Log($"enabling: {words}");
+    }
+
+
+    private IEnumerator EnablePanelDelayed(int totalCatFound, string catName, CategoryType catType, string words)
+    {
+        yield return new WaitForSeconds(wordSortIntoCategoryAnimationDuration);
+        Debug.Log($"Enabling pane: {catName} - {words}");
+        EnablePanel(totalCatFound, $"{catName} - {words}", catType);
+        yield break;
     }
 
     public void SelectWord(WordToggle btn)
@@ -129,17 +170,6 @@ public class UIManager : MonoBehaviour
         {
             item.gameObject.transform.DOPunchPosition(new Vector3(10f, 0f, 0f), duration: 1f);
         }
-    }
-
-    public void SwapAnimation(WordToggle first, WordToggle second)
-    {
-        //Instantiate(wordDummy);
-        //wordDummy.transform.position = first.transform.position;
-        //Instantiate(wordDummy);
-        //wordDummy.transform.position = second.transform.position;
-        first.gameObject.transform.DOMove(second.gameObject.transform.position, duration: 1f).SetEase(Ease.OutCubic);
-        second.gameObject.transform.DOMove(first.gameObject.transform.position, duration: 1f).SetEase(Ease.OutCubic);
-
     }
 
     public void Victory(float secs, int mistakes)
