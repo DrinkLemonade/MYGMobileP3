@@ -36,6 +36,11 @@ public class UIManager : MonoBehaviour
     public GameObject ButtonAnchorHolder, ButtonFreeHolder;
     public float wordSortIntoCategoryAnimationDuration = 1f;
 
+    [SerializeField]
+    float onCategoryFoundBounceScale, onCategoryFoundBounceDuration, onCategoryFoundBounceElasticity;
+    [SerializeField]
+    int onCategoryFoundBounceVibrato;
+
     private void Awake()
     {
         i = this;
@@ -147,6 +152,8 @@ public class UIManager : MonoBehaviour
         CategoryPanels[atSiblingIndex].SetActive(true);
         CategoryPanels[atSiblingIndex].GetComponentInChildren<TextMeshProUGUI>().text = catName;
         CategoryPanels[atSiblingIndex].GetComponent<Image>().color = col;
+
+        CategoryPanels[atSiblingIndex].transform.DOPunchScale(new Vector3(onCategoryFoundBounceScale, onCategoryFoundBounceScale, onCategoryFoundBounceScale), onCategoryFoundBounceDuration, onCategoryFoundBounceVibrato, onCategoryFoundBounceElasticity);
     }
 
     public void ShakeSelectedButtons()

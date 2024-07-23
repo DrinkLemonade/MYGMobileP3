@@ -97,6 +97,11 @@ MonoBehaviour:
   img: {fileID: 7050489909692795801}
   toggle: {fileID: 6867819283747254008}
   anchor: {fileID: 0}
+  onSelectBounceScale: 0.1
+  onSelectBounceDuration: 0.3
+  onSelectBounceElasticity: 0
+  onSelectBounceVibrato: 0
+  onSelectEaseType: 8
   Found: 0
 --- !u!114 &3874454856917402100
 MonoBehaviour:
@@ -499,7 +504,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
+  m_fontSize: 26.85
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

@@ -6351,6 +6351,10 @@ MonoBehaviour:
   ButtonAnchorHolder: {fileID: 429152460}
   ButtonFreeHolder: {fileID: 1813337381}
   wordSortIntoCategoryAnimationDuration: 1
+  onCategoryFoundBounceScale: 0.15
+  onCategoryFoundBounceDuration: 0.5
+  onCategoryFoundBounceElasticity: 1
+  onCategoryFoundBounceVibrato: 0
 --- !u!1001 &1928291332
 PrefabInstance:
   m_ObjectHideFlags: 0
