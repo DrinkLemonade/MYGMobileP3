@@ -51,7 +51,9 @@ public class WordToggle : MonoBehaviour
     {
         yield return null;
         transform.DOMove(anchor.transform.position, duration: UIManager.i.wordSortIntoCategoryAnimationDuration).SetEase(Ease.OutCubic);
-        img.DOColor(associatedColor, duration: UIManager.i.wordSortIntoCategoryAnimationDuration).SetEase(Ease.OutCubic);
+        if (Found) toggle.enabled = false;
+        if (Found) img.DOColor(associatedColor, duration: UIManager.i.wordSortIntoCategoryAnimationDuration).SetEase(Ease.OutCubic);
+        Debug.Log(associatedColor);
         yield break;
     }
 }

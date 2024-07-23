@@ -61,7 +61,11 @@ public class UIManager : MonoBehaviour
         foreach (var item in WordButtons)
         {
             item.toggle.SetIsOnWithoutNotify(false);
-            item.SetWord(wordsStringOnly[i], Color.white);
+
+            CategoryType type = GameManager.i.currentSession.Words.Where(x => x.Key == wordsStringOnly[i]).First().Value.myType;
+            Color col = GetCategoryColor(type);
+
+            item.SetWord(wordsStringOnly[i], col); //GameManager.i.currentSession.Words.Where(x => x.).);
             item.anchor = UIManager.i.ButtonAnchors[i].gameObject;
             item.anchor.name = $"{item.gameObject.name} Anchor";
             i++;
@@ -138,26 +142,7 @@ public class UIManager : MonoBehaviour
     public void EnablePanel(int atSiblingIndex, string catName, GameSession.CategoryType type)
     {
         //Change this to a less stupid version
-        Color col;
-        switch (type)
-        {
-            case CategoryType.Green:
-                col = CategoryGreenColor;
-                break;
-            case CategoryType.Yellow:
-                col = CategoryYellowColor;
-                break;
-            case CategoryType.Blue:
-                col = CategoryBlueColor;
-                break;
-            case CategoryType.Purple:
-                col = CategoryPurpleColor;
-                break;
-            default:
-                col = Color.red;
-                Debug.LogError("Unassigned category?");
-                break;
-        }
+        Color col = GetCategoryColor(type);
 
         CategoryPanels[atSiblingIndex].SetActive(true);
         CategoryPanels[atSiblingIndex].GetComponentInChildren<TextMeshProUGUI>().text = catName;
@@ -179,5 +164,30 @@ public class UIManager : MonoBehaviour
     public void Defeat()
     {
         gameEndPanel.ShowFailure();
+    }
+
+    Color GetCategoryColor(CategoryType type)
+    {
+        Color col;
+        switch (type)
+        {
+            case CategoryType.Green:
+                col = CategoryGreenColor;
+                break;
+            case CategoryType.Yellow:
+                col = CategoryYellowColor;
+                break;
+            case CategoryType.Blue:
+                col = CategoryBlueColor;
+                break;
+            case CategoryType.Purple:
+                col = CategoryPurpleColor;
+                break;
+            default:
+                col = Color.red;
+                Debug.LogError("Unassigned category?");
+                break;
+        }
+        return col;
     }
 }
