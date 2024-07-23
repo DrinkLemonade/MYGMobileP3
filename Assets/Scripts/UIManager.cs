@@ -160,7 +160,7 @@ public class UIManager : MonoBehaviour
     {
         foreach (var item in WordButtonsSelected)
         {
-            item.gameObject.transform.DOPunchPosition(new Vector3(10f, 0f, 0f), duration: 1f);
+            item.Shake(10f, 1f);
         }
     }
 

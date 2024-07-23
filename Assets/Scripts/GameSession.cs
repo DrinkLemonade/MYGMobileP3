@@ -125,6 +125,7 @@ public class GameSession
 
     void GuessIsIncorrect()
     {
+        SoundManager.i.PlaySound(SoundManager.i.GuessIncorrect);
         Debug.Log("Failure");
         UIManager.i.ShakeSelectedButtons();
         DecreaseLives();
@@ -136,6 +137,7 @@ public class GameSession
 
     void GuessIsCorrect(Category categoryFound)
     {
+        SoundManager.i.PlaySound(SoundManager.i.GuessCorrect);
         string words = "";
         int i = 0;
         foreach (var item in UIManager.i.WordButtonsSelected)
@@ -174,10 +176,12 @@ public class GameSession
 
     void Victory(float time, int mistakes)
     {
+        SoundManager.i.PlaySound(SoundManager.i.JingleVictory);
         UIManager.i.Victory(time, mistakes);
     }
     void Defeat()
     {
+        SoundManager.i.PlaySound(SoundManager.i.JingleDefeat);
         UIManager.i.Defeat();
     }
 }

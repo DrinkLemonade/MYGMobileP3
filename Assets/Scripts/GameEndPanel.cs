@@ -38,7 +38,8 @@ public class GameEndPanel : MonoBehaviour
         if (hours < 0) time = $"{m}:{s}";
         else time = $"{h}:{m}:{s}";
 
-        gameEndTMP.text = victoryText + $"\nTrouvé en : {time} - {mistakes} erreurs";
+        string plural = mistakes == 1 ? "" : "s";
+        gameEndTMP.text = victoryText + $"\nTrouvé en : {time} - {mistakes} erreur{plural}";
     }
 
     public void BackToMainMenu()

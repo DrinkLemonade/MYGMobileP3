@@ -102,6 +102,8 @@ MonoBehaviour:
   onSelectBounceElasticity: 0
   onSelectBounceVibrato: 0
   onSelectEaseType: 8
+  audioOnSelect: {fileID: 8300000, guid: 9e9c3e9e95ec0d94ca14afedb4b13fa9, type: 3}
+  audioOnDeselect: {fileID: 8300000, guid: cbab39db39e73464982eeeee09abd628, type: 3}
   Found: 0
 --- !u!114 &3874454856917402100
 MonoBehaviour:
@@ -504,7 +506,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26.85
+  m_fontSize: 18
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

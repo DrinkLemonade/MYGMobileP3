@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class WordToggle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
@@ -22,6 +23,8 @@ public class WordToggle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     int onSelectBounceVibrato;
     [SerializeField]
     Ease onSelectEaseType;
+    [SerializeField]
+    AudioClip audioOnSelect, audioOnDeselect;
 
     public bool Found = false; //Found words are permanently unusable and hidden behind the category banner
     private IEnumerator coroutine;
@@ -38,6 +41,9 @@ public class WordToggle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (Found) return;
         if (toggle) UIManager.i.SelectWord(this);
         else UIManager.i.DeselectWord(this);
+
+        if (toggle) SoundManager.i.PlaySound(audioOnSelect);
+        else SoundManager.i.PlaySound(audioOnDeselect);
     }
 
     public void SetFound()
@@ -72,12 +78,18 @@ public class WordToggle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         //var imgFadeSeq = DOTween.Sequence().Join(
         transform.DORewind();
-        transform.DOPunchScale(new Vector3(onSelectBounceScale, onSelectBounceScale, onSelectBounceScale), onSelectBounceDuration, onSelectBounceVibrato, onSelectBounceElasticity)
+        if (toggle.interactable) transform.DOPunchScale(new Vector3(onSelectBounceScale, onSelectBounceScale, onSelectBounceScale), onSelectBounceDuration, onSelectBounceVibrato, onSelectBounceElasticity)
             //Not sure if this does anything?
             .SetEase(onSelectEaseType);
+        else Shake(5f, 0.5f); ;
         //imgFadeSeq.Append(transform.DOScale(onSelectBounceScale, onSelectBounceDuration));
         //imgFadeSeq.Append(transform.DOScale(1f, onSelectBounceDuration));
         //this.transform.DOScale(onSelectBounceScale, onSelectBounceDuration)
         Debug.Log("The mouse click was released");
+    }
+
+    public void Shake(float force, float duration)
+    {
+        gameObject.transform.DOPunchPosition(new Vector3(force, 0f, 0f), duration: duration);
     }
 }

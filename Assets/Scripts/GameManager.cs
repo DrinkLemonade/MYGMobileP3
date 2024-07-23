@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.Start:
                 currentSession = new();
+                SoundManager.i.LoopMusic(SoundManager.i.MainGameMusic);
                 break;
             case GameState.Ongoing:
                 break;
