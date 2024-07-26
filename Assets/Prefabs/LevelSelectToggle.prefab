@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &5108724891371101979
+--- !u!1001 &9011279028715117655
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10,23 +10,27 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1906919082429221624, guid: 2aac068bcfc41bb4193fdba08b95ead9, type: 3}
       propertyPath: m_Name
-      value: Word Toggle
+      value: LevelSelectToggle
+      objectReference: {fileID: 0}
+    - target: {fileID: 2098607771254051709, guid: 2aac068bcfc41bb4193fdba08b95ead9, type: 3}
+      propertyPath: m_text
+      value: '?'
       objectReference: {fileID: 0}
     - target: {fileID: 6867819283747254008, guid: 2aac068bcfc41bb4193fdba08b95ead9, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6867819283747254008, guid: 2aac068bcfc41bb4193fdba08b95ead9, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 4289680129298192515}
+      objectReference: {fileID: 226466132977408368}
     - target: {fileID: 6867819283747254008, guid: 2aac068bcfc41bb4193fdba08b95ead9, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ToggleMe
+      value: IsClicked
       objectReference: {fileID: 0}
     - target: {fileID: 6867819283747254008, guid: 2aac068bcfc41bb4193fdba08b95ead9, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: WordToggle, Assembly-CSharp
+      value: LevelSelectButton, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 9111695940612128920, guid: 2aac068bcfc41bb4193fdba08b95ead9, type: 3}
       propertyPath: m_Pivot.x
@@ -114,45 +118,23 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1906919082429221624, guid: 2aac068bcfc41bb4193fdba08b95ead9, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4289680129298192515}
+      addedObject: {fileID: 226466132977408368}
   m_SourcePrefab: {fileID: 100100000, guid: 2aac068bcfc41bb4193fdba08b95ead9, type: 3}
---- !u!114 &115325710503592040 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -4072258845553483917, guid: 2aac068bcfc41bb4193fdba08b95ead9, type: 3}
-  m_PrefabInstance: {fileID: 5108724891371101979}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6670793077571278307}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8e8cfda58fb7db4ca7e35763c7652fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1849487928725336547 stripped
+--- !u!114 &2468284617441473199 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6867819283747254008, guid: 2aac068bcfc41bb4193fdba08b95ead9, type: 3}
-  m_PrefabInstance: {fileID: 5108724891371101979}
+  m_PrefabInstance: {fileID: 9011279028715117655}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6670793077571278307}
+  m_GameObject: {fileID: 7455922785758893743}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2827566838759150722 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7050489909692795801, guid: 2aac068bcfc41bb4193fdba08b95ead9, type: 3}
-  m_PrefabInstance: {fileID: 5108724891371101979}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &6627634672126266470 stripped
+--- !u!114 &6922523208331890474 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2098607771254051709, guid: 2aac068bcfc41bb4193fdba08b95ead9, type: 3}
-  m_PrefabInstance: {fileID: 5108724891371101979}
+  m_PrefabInstance: {fileID: 9011279028715117655}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -160,27 +142,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &6670793077571278307 stripped
+--- !u!1 &7455922785758893743 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1906919082429221624, guid: 2aac068bcfc41bb4193fdba08b95ead9, type: 3}
-  m_PrefabInstance: {fileID: 5108724891371101979}
+  m_PrefabInstance: {fileID: 9011279028715117655}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4289680129298192515
+--- !u!114 &226466132977408368
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6670793077571278307}
+  m_GameObject: {fileID: 7455922785758893743}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a68a00da7ac92143b2ff7b8de5328c0, type: 3}
+  m_Script: {fileID: 11500000, guid: 68bf0db442e5d8f4abb0a6788f511e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  associatedWord: 
-  tmp: {fileID: 6627634672126266470}
-  img: {fileID: 2827566838759150722}
-  toggle: {fileID: 1849487928725336547}
-  anchor: {fileID: 0}
-  effects: {fileID: 115325710503592040}
-  Found: 0
+  wordDisplay: []
+  buttonText: {fileID: 6922523208331890474}
+  wordDisplayHolder: {fileID: 0}
+  toggle: {fileID: 2468284617441473199}

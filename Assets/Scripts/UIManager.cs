@@ -4,18 +4,16 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-
-using static GameSession;
 using System.Collections;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager i;
-    //[NonSerialized]
+    [HideInInspector]
     public List<WordToggle> WordButtonsSelected;
-    //[NonSerialized]
+    [HideInInspector]
     public List<WordToggle> WordButtons;
-    //[NonSerialized]
+    [HideInInspector]
     public List<WordToggleAnchor> ButtonAnchors;
     [SerializeField]
     Button confirmButton;

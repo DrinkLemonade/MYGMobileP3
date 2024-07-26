@@ -1,7 +1,5 @@
 using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -51,15 +49,19 @@ public class MainMenu : MonoBehaviour
         {
             levelButtons[z].associatedLevel = level;
             levelButtons[z].buttonText.text = level.number.ToString();
+            levelButtons[z].toggle.interactable = true;
             z++;
         }
+
+        //TODO: Right now we start with all level buttons disabled, then enable those within the level count.
+        //In the future, unavailable levels should be clickable, but will display "this level will be available on [date]" instead
+
     }
     public void PlayGame()
     {
         SceneManager.LoadScene(gameplayScene);
     }
 
-    // Update is called once per frame
     public void QuitGame()
     {
         Application.Quit();

@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
             Destroy(i.gameObject);
 
         i = this;
-        DontDestroyOnLoad(this);
+        DontDestroyOnLoad(transform.parent);
         ChangeState(GameState.Start);
     }
 

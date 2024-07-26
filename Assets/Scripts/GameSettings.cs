@@ -35,7 +35,7 @@ public class GameSettings : MonoBehaviour
             Destroy(i.gameObject);
 
         i = this;
-        DontDestroyOnLoad(this);
+        DontDestroyOnLoad(transform.parent);
         //We fill the holder when executing the Update functions below.
         SettingsHolder = new();
 

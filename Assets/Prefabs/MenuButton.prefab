@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3271847266872410357}
   - component: {fileID: 2990503793099433170}
   - component: {fileID: 7903119226530309304}
+  - component: {fileID: 6883531495933123416}
   m_Layer: 5
   m_Name: MenuButton
   m_TagString: Untagged
@@ -121,6 +122,27 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6883531495933123416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4626744280976316094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8e8cfda58fb7db4ca7e35763c7652fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toggle: {fileID: 0}
+  button: {fileID: 7903119226530309304}
+  onSelectBounceScale: 0.1
+  onSelectBounceDuration: 0.3
+  onSelectBounceElasticity: 0
+  onSelectBounceVibrato: 0
+  onSelectEaseType: 8
+  audioOnSelect: {fileID: 8300000, guid: 9e9c3e9e95ec0d94ca14afedb4b13fa9, type: 3}
+  audioOnDeselect: {fileID: 0}
 --- !u!1 &5257430335657527345
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,7 +235,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
+  m_fontSize: 62.65
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1

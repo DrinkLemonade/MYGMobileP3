@@ -23,7 +23,7 @@ public class SoundManager : MonoBehaviour
             Destroy(i.gameObject);
 
         i = this;
-        DontDestroyOnLoad(this);
+        DontDestroyOnLoad(transform.parent);
 
         //Make sure this doesn't happen before we've loaded the music volume!
         SoundManager.i.StartCoroutine(SoundManager.i.CrossFade(SoundManager.i.MainMenuMusic));
