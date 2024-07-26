@@ -6,8 +6,6 @@ using UnityEngine.UI;
 using DG.Tweening;
 
 using static GameSession;
-using Unity.Collections.LowLevel.Unsafe;
-using System;
 using System.Collections;
 
 public class UIManager : MonoBehaviour
@@ -67,7 +65,7 @@ public class UIManager : MonoBehaviour
         {
             item.toggle.SetIsOnWithoutNotify(false);
 
-            CategoryType type = GameManager.i.currentSession.Words.Where(x => x.Key == wordsStringOnly[i]).First().Value.myType;
+            Category.CategoryType type = GameManager.i.currentSession.Words.Where(x => x.Key == wordsStringOnly[i]).First().Value.myType;
             Color col = GetCategoryColor(type);
 
             item.SetWord(wordsStringOnly[i], col); //GameManager.i.currentSession.Words.Where(x => x.).);
@@ -81,7 +79,7 @@ public class UIManager : MonoBehaviour
         infoBannerOneAway.HideInstantly();
     }
 
-    public void GridAnimation(int totalCatFound, string catName, CategoryType catType, string words)
+    public void GridAnimation(int totalCatFound, string catName, Category.CategoryType catType, string words)
     {
         foreach (var item in UIManager.i.WordButtons)
         {
@@ -93,7 +91,7 @@ public class UIManager : MonoBehaviour
     }
 
 
-    private IEnumerator EnablePanelDelayed(int totalCatFound, string catName, CategoryType catType, string words)
+    private IEnumerator EnablePanelDelayed(int totalCatFound, string catName, Category.CategoryType catType, string words)
     {
         yield return new WaitForSeconds(wordSortIntoCategoryAnimationDuration);
         Debug.Log($"Enabling pane: {catName} - {words}");
@@ -144,7 +142,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void EnablePanel(int atSiblingIndex, string catName, GameSession.CategoryType type)
+    public void EnablePanel(int atSiblingIndex, string catName, Category.CategoryType type)
     {
         //Change this to a less stupid version
         Color col = GetCategoryColor(type);
@@ -173,21 +171,21 @@ public class UIManager : MonoBehaviour
         gameEndPanel.ShowFailure();
     }
 
-    Color GetCategoryColor(CategoryType type)
+    Color GetCategoryColor(Category.CategoryType type)
     {
         Color col;
         switch (type)
         {
-            case CategoryType.Green:
+            case Category.CategoryType.Green:
                 col = CategoryGreenColor;
                 break;
-            case CategoryType.Yellow:
+            case Category.CategoryType.Yellow:
                 col = CategoryYellowColor;
                 break;
-            case CategoryType.Blue:
+            case Category.CategoryType.Blue:
                 col = CategoryBlueColor;
                 break;
-            case CategoryType.Purple:
+            case Category.CategoryType.Purple:
                 col = CategoryPurpleColor;
                 break;
             default:

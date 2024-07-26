@@ -54,7 +54,7 @@ public class SoundManager : MonoBehaviour
     public void LoopMusic(AudioClip sound)
     {
         if (sound == null) Debug.LogError("Audio clip is null!");
-        else if (musicSource == null) Debug.LogError($"Playing {sound.name} but source is null!");
+        if (musicSource == null) Debug.LogError($"Playing {sound.name} but source is null!");
         musicSource.clip = sound;
         musicSource.loop = true;
         musicSource.Play();

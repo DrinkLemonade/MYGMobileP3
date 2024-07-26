@@ -13,22 +13,7 @@ public class GameSession
     HashSet<HashSet<string>> guesses; 
     const int wordsPerCategory = 4;
 
-    public enum CategoryType
-    {
-        Green, Yellow, Blue, Purple
-    }
 
-    public struct Category
-    {
-        public CategoryType myType;
-        public string name;
-
-        public Category(CategoryType _myType, string _name)
-        {
-            myType = _myType;
-            name = _name;
-        }
-    }
 
     public Dictionary<string, Category> Words;
     public GameSession()
@@ -38,16 +23,22 @@ public class GameSession
         Words = new();
         categoriesFound = new();
         guesses = new();
-        AddWords(CategoryType.Green, "Capitales", "Paris", "Londres", "Helsinki", "Pékin");
-        AddWords(CategoryType.Yellow, "Phases de la lune", "Croissante", "Nouvelle", "Pleine", "Décroissante");
-        AddWords(CategoryType.Blue, "Patisseries", "Religieuse", "Eclair", "Tulipe", "Choux");
-        AddWords(CategoryType.Purple, "Légumes-racines", "Navet", "Raifort", "Topinambour", "Ginseng");
+        AddWords(Category.CategoryType.Green, "Capitales", "Paris", "Londres", "Helsinki", "Pékin");
+        AddWords(Category.CategoryType.Yellow, "Phases de la lune", "Croissante", "Nouvelle", "Pleine", "Décroissante");
+        AddWords(Category.CategoryType.Blue, "Patisseries", "Religieuse", "Eclair", "Tulipe", "Choux");
+        AddWords(Category.CategoryType.Purple, "Légumes-racines", "Navet", "Raifort", "Topinambour", "Ginseng");
 
         //Local function
         //TODO: Where do these Category structs live in memory? Should they be held by GameSession? Who needs to know the categories?
-        void AddWords(CategoryType categoryType, string categoryName, string word1, string word2, string word3, string word4)
+        void AddWords(Category.CategoryType categoryType, string categoryName, string word1, string word2, string word3, string word4)
         {
-            var cat = new Category(categoryType, categoryName);
+            List<string> categoryWords = new()
+            {
+                word1, word2, word3, word4
+            };
+
+            var cat = new Category(categoryType, categoryName, categoryWords);
+            //TODO: Stop using this stupid method, you can get words from the categories
             Words.Add(word1, cat);
             Words.Add(word2, cat);
             Words.Add(word3, cat);

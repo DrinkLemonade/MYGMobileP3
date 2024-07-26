@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -26,7 +24,11 @@ public class GameManager : MonoBehaviour
     }
     public enum GameState
     {
-        Menu, Start, Ongoing, Finishing, Over
+        Menu,
+        Start,
+        Ongoing,
+        Finishing,
+        Over
     }
 
     private void ChangeState(GameState state)
