@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,15 @@ public class MainMenu : MonoBehaviour
     List<GameLevel> levelList;
     [SerializeField]
     List<LevelSelectButton> levelButtons;
+    [SerializeField]
+    GameObject containerMainMenu, containerLevelSelection, containerSettings;
+    [SerializeField]
+    float offScreenMenuAnimationPositionY, offScreenMenuAnimationTime;
+    float previousMenuPositionY;
+    [SerializeField]
+    Ease offScreenMenuAnimationEase;
+    Sequence menuAppear;
+
 
     private void Start()
     {
@@ -57,6 +67,35 @@ public class MainMenu : MonoBehaviour
         //In the future, unavailable levels should be clickable, but will display "this level will be available on [date]" instead
 
     }
+
+    //TODO: There has to be a smarter way to do this
+    private void ChangeMenus(GameObject from, GameObject to)
+    { 
+    
+        var rT = from.GetComponent<RectTransform>();
+        rT.DOAnchorPosY(offScreenMenuAnimationPositionY, offScreenMenuAnimationTime).SetEase(offScreenMenuAnimationEase);
+
+        var rT2 = to.GetComponent<RectTransform>();
+        rT2.DOAnchorPosY(0f, offScreenMenuAnimationTime).SetEase(offScreenMenuAnimationEase);
+    public void ChangeMenuMainToSettings()
+    {
+        ChangeMenus(containerMainMenu, containerSettings);
+    }
+    public void ChangeMenuSettingsToMain()
+    {
+        ChangeMenus(containerSettings, containerMainMenu);
+    }
+    public void ChangeMenuMainToLevels()
+    {
+        ChangeMenus(containerMainMenu, containerLevelSelection);
+    }
+    public void ChangeMenuLevelsToMain()
+    {
+        ChangeMenus(containerLevelSelection, containerMainMenu);
+    }
+
+
+
     public void PlayGame()
     {
         SceneManager.LoadScene(gameplayScene);

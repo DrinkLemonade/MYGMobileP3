@@ -84,7 +84,7 @@ MonoBehaviour:
   delaySecondsBetweenEndTurnEffects: 0.5
   canDivideAnimationSpeedUpTo: 3
   canMultiplyAnimationSpeedByUpTo: 3
-  audioMixer: {fileID: 0}
+  audioMixer: {fileID: 24100000, guid: edd3861008729924f941c97fd2fc10cf, type: 2}
 --- !u!1 &4549902768706967169
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,8 +179,8 @@ MonoBehaviour:
   musicSource: {fileID: 3681700998020683030}
   JingleVictory: {fileID: 0}
   JingleDefeat: {fileID: 0}
-  MainMenuMusic: {fileID: 0}
-  MainGameMusic: {fileID: 8300000, guid: b86f7afa234c23a469f6b01c54338377, type: 3}
+  MainMenuMusic: {fileID: 8300000, guid: b86f7afa234c23a469f6b01c54338377, type: 3}
+  MainGameMusic: {fileID: 8300000, guid: 4c10a7734c03ab4429243c1704fd95ca, type: 3}
   GuessCorrect: {fileID: 8300000, guid: 2790d10e2e6bdd14891ba30788a7e267, type: 3}
   GuessIncorrect: {fileID: 8300000, guid: a88f4efb657412a4cb4fc4505010500c, type: 3}
 --- !u!82 &3681700998020683030
@@ -195,7 +195,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.066
   m_Pitch: 1
   Loop: 0
   Mute: 0
