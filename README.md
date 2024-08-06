@@ -2,6 +2,8 @@
 
 "Connecte-Moi Ça" ("CMC" for short) is a logic game designed for mobile platforms. The game's goal is to find the logic connecting the variety of words shown on the screen. Each puzzle consists of 4 categories, each containing 4 words. The player must think carefully due to their limited number of attempts, and use their general knowledge and logical association skills in order to solve each puzzle.
 
+DocFX-generated documentation is available at https://drinklemonade.github.io/
+
 ## Trello
 
 ## Block-out mockups on Figma
