@@ -2,9 +2,6 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
-# Playfab
-/[Aa]ssets/[Pp]lay[Ff]ab[Ee]ditor[Ee]xtensions/
-/[Aa]ssets/[Pp]lay[Ff]ab[Ss][Dd][Kk]/
 
 /[Ll]ibrary/
 /[Tt]emp/
